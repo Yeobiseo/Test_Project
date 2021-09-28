@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+
+<typeAliases>
+  <typeAlias alias="TBoard" type="com.test.testweb.TBoard"/>
+  <typeAlias alias="TUser" type="com.test.testweb.TUser"/>
+  <typeAlias alias="TReply" type="com.test.testweb.TReply"/>
+</typeAliases>
+
+</configuration>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="main">
+
+<insert id="signupMv" parameterType="TUser">
+	INSERT INTO TUSER
+	VALUES     (#{userId},
+	            #{userPwd},
+	            SYSDATE) 
+</insert>
+
+<select id="login" resultType="HashMap">
+	SELECT A.USER_ID as USER_ID,
+	       A.INSERT_DATE as INSERT_DATE
+	  FROM TUSER A 
+	 WHERE A.USER_ID=#{id}  
+	   AND A.USER_PWD=#{pwd}
+</select>
+
+<insert id="postingMv" parameterType="TBoard">
+	INSERT INTO TBOARD
+	VALUES     (TBOARD_NO_SEQ.nextval,
+	            #{title},
+	            #{content},
+	            '1',
+	            #{userId},
+	            SYSDATE) 
+</insert>
+ 
+<select id="postList" resultType="HashMap">
+	SELECT A.NO as NO,
+		   A.TITLE as TITLE,
+		   A.CONTENT as CONTEST,
+		   A.USE_YN as USER_YN,
+		   A.USER_ID as USER_ID,
+		   TO_CHAR(A.INSERT_DATE, 'yy/mm/dd hh24:mi') as INSERT_DATE 
+	  FROM TBOARD A
+	 WHERE A.USE_YN='1'
+</select>
+
+<select id="post" resultType="HashMap">
+	SELECT A.NO as NO,
+		   A.TITLE as TITLE,
+		   A.CONTENT as CONTEST,
+		   A.USER_ID as USER_ID
+	  FROM TBOARD A
+	 WHERE A.NO=#{no}
+</select>
+
+<update id="postDel" parameterType="HashMap">
+	UPDATE TBOARD A
+	   SET A.USE_YN = '0'
+	 WHERE A.NO = #{no}
+</update>
+
+<update id="postUpdate" parameterType="HashMap">
+	UPDATE TBOARD A
+	   SET A.TITLE = #{title},
+	       A.CONTENT = #{content}
+	 WHERE A.NO = #{no}
+</update>
+
+<select id="reply" resultType="HashMap">
+	SELECT A.NO as NO,
+		   A.RECONTENT as RECONTENT,
+		   A.USER_ID as USER_ID,
+		   A.RE_YN as RE_YN,
+		   TO_CHAR(A.INSERT_DATE, 'yy/mm/dd hh24:mi') as INSERT_DATE 
+	  FROM TREPLY A
+	 WHERE A.NO=#{no}
+</select>
+
+<insert id="replyInsert" parameterType="TReply">
+	INSERT INTO TREPLY
+	           (NO,
+	            RECONTENT,
+	            USER_ID)
+	VALUES     (#{no},
+	            #{recontent},
+	            #{userId}) 
+</insert>
+</mapper>
