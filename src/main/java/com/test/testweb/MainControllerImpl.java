@@ -33,24 +33,27 @@ public class MainControllerImpl implements MainController {
 	@Resource(name = "mainService")
 	MainService ms;
 
-	public static String inputId = "";
-	public static String page = "";
+	// 아이디 저장용 변수
+	private String page = "";
+	private String inputId = "";
 
-	//게시판 글 목록
+	// 게시판 글 목록
 	@Override
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView postList(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView postList(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam HashMap<String, String> map) {
 		List<HashMap<String, String>> postList = ms.postList();
 		ModelAndView mav = new ModelAndView("index");
-		mav.addObject("list",postList);
+		mav.addObject("list", postList);
 
-		if(page.equals("login")) {
+		if (page.equals("login")) {
 			mav.addObject("inputId", inputId);
-		} else mav.addObject("inputId", "");
+			inputId = "";
+		} else
+			mav.addObject("inputId", "");
 
 		return mav;
 	}
-
 
 	// 로그인
 	@Override
@@ -67,10 +70,10 @@ public class MainControllerImpl implements MainController {
 			session.setAttribute("userId", userList.get(0).get("USER_ID"));
 			mav.setViewName("redirect:/");
 		} else {
+			page = "login";
+			inputId = map.get("id");
 			mav.addObject("msg", "아이디 또는 비밀번호를 확인하세요");
 		}
-			inputId = map.get("id");
-			page = "login";
 
 		return mav;
 	}
@@ -81,7 +84,6 @@ public class MainControllerImpl implements MainController {
 	public String index(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("userList") != null) {
-			page = "logout";
 			session.invalidate();
 		}
 		return "redirect:/";
@@ -152,9 +154,8 @@ public class MainControllerImpl implements MainController {
 		} catch (Exception e) {
 			mav.addObject("msg", "에러!");
 			return mav;
-			}
 		}
-
+	}
 
 	// 작성글 상세보기
 	@Override
@@ -165,8 +166,8 @@ public class MainControllerImpl implements MainController {
 		List<HashMap<String, String>> reply = ms.reply(map);
 
 		ModelAndView mav = new ModelAndView("post");
-		mav.addObject("list",post);
-		mav.addObject("reply",reply);
+		mav.addObject("list", post);
+		mav.addObject("reply", reply);
 		return mav;
 	}
 
@@ -190,8 +191,8 @@ public class MainControllerImpl implements MainController {
 		} catch (Exception e) {
 			mav.addObject("msg", "에러!");
 			return mav;
-			}
 		}
+	}
 
 	// 작성글 수정 페이지 이동
 	@Override
@@ -200,7 +201,7 @@ public class MainControllerImpl implements MainController {
 			@RequestParam HashMap<String, String> map) {
 		List<HashMap<String, String>> post = ms.post(map);
 		ModelAndView mav = new ModelAndView("postUpage");
-		mav.addObject("list",post);
+		mav.addObject("list", post);
 		return mav;
 	}
 
@@ -264,7 +265,7 @@ public class MainControllerImpl implements MainController {
 	public String test(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String urlStr = "http://apis.data.go.kr/1360000/TourStnInfoService/getTourStnWthrIdx?ServiceKey=%2BgvdZknwfI9SkVlsApRoooatYw8pRkMt6V2%2BHIyiRJjDj6qzgibs2HN3KDmlp9wJ2YYMlTN3qqBRpQIPqJMjiQ%3D%3D&pageNo=1&numOfRows=10&dataType=xml&CURRENT_DATE=2021090301&HOUR=24&COURSE_ID=55";
-		    // 가져온 주소 OPEN 200이면 성공
+			// 가져온 주소 OPEN 200이면 성공
 			URL url = new URL(urlStr);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			int responseCode = conn.getResponseCode();
@@ -296,14 +297,13 @@ public class MainControllerImpl implements MainController {
 
 			request.setAttribute("list", itemList);
 
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("에러났누");
 		}
 
 		return "test";
 
 	}
-
 
 	@ResponseBody
 	@RequestMapping(value = "/idcheck.do", method = RequestMethod.POST, produces = "application/json; charset=utf-8")

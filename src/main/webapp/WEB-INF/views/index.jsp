@@ -10,7 +10,7 @@
 <body>
 	<form action="/login.do" method="post">
 		<c:if test="${userList eq null}">
-			<input type="text" name="id" required="required" value="${inputId}">
+			<input type="text" name="id" required="required" value="${requestScope.inputId}">
 			<input type="password" name="pwd" required="required">
 			<button type="submit">로그인</button>
 			<button type="button" onClick="signUp();">회원가입</button>

@@ -2,5 +2,6 @@
     pageEncoding="UTF-8"%>
 <script>
 alert('${msg}');
+<% request.setAttribute("aa", "test"); %>
 window.location.href = "/";
 </script>
