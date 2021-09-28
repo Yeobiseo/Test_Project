@@ -279,8 +279,6 @@ public class MainControllerImpl implements MainController {
 
 			String str = jp.toString();
 
-			System.out.println(str.toString());
-
 			ObjectMapper objectMapper = new ObjectMapper();
 			Map<String, Object> map = new HashMap<String, Object>();
 			map = objectMapper.readValue(str, new TypeReference<Map<String, Object>>() {
