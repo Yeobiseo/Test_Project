@@ -33,6 +33,9 @@ public class MainControllerImpl implements MainController {
 	@Resource(name = "mainService")
 	MainService ms;
 
+	public static String inputId = "";
+	public static String page = "";
+
 	//게시판 글 목록
 	@Override
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -40,6 +43,11 @@ public class MainControllerImpl implements MainController {
 		List<HashMap<String, String>> postList = ms.postList();
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("list",postList);
+
+		if(page.equals("login")) {
+			mav.addObject("inputId", inputId);
+		} else mav.addObject("inputId", "");
+
 		return mav;
 	}
 
@@ -47,17 +55,24 @@ public class MainControllerImpl implements MainController {
 	// 로그인
 	@Override
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+	public ModelAndView login(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			@RequestParam HashMap<String, String> map) {
 		List<HashMap<String, String>> userList = ms.login(map);
+
+		ModelAndView mav = new ModelAndView("msg");
 
 		if (userList.size() > 0) {
 			request.getSession();
 			session.setAttribute("userList", userList);
 			session.setAttribute("userId", userList.get(0).get("USER_ID"));
+			mav.setViewName("redirect:/");
+		} else {
+			mav.addObject("msg", "아이디 또는 비밀번호를 확인하세요");
 		}
+			inputId = map.get("id");
+			page = "login";
 
-		return "redirect:/";
+		return mav;
 	}
 
 	// 로그아웃
@@ -66,6 +81,7 @@ public class MainControllerImpl implements MainController {
 	public String index(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("userList") != null) {
+			page = "logout";
 			session.invalidate();
 		}
 		return "redirect:/";

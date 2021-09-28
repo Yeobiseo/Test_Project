@@ -10,7 +10,7 @@
 <body>
 	<form action="/login.do" method="post">
 		<c:if test="${userList eq null}">
-			<input type="text" name="id" required="required">
+			<input type="text" name="id" required="required" value="${inputId}">
 			<input type="password" name="pwd" required="required">
 			<button type="submit">로그인</button>
 			<button type="button" onClick="signUp();">회원가입</button>
@@ -25,12 +25,6 @@
 			<span>
 				<button type="button" onClick="logout()">로그아웃</button>
 				<button type="submit" onClick="posting()">글쓰기</button>
-				<select name="language" >
-					<option value="none">=== 선택 ===</option>
-				    <option value="seoul" selected>서울</option>
-				    <option value="busan">부산</option>
-				    <option value="incheon">인천</option>
-				</select>
 				<button type="button" onClick="test();">날씨</button>
 			</span>
 		</c:if>
