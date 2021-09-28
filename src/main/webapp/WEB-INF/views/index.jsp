@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="userList" value="${userList}" />
 <!DOCTYPE html>
@@ -18,21 +17,28 @@
 			<button type="button" onClick="test();">날씨</button>
 		</c:if>
 	</form>
-	
+
 	<%-- 로그인 상태표시 --%>
 	<div style="margin-bottom:15px;">
 		<c:if test="${userList ne null}">
 					${userList[0].USER_ID} 님 안녕하세요!
 			<span>
-				<button type="button" onClick="logout()">로그아웃</button>		
+				<button type="button" onClick="logout()">로그아웃</button>
 				<button type="submit" onClick="posting()">글쓰기</button>
+				<select name="language" >
+					<option value="none">=== 선택 ===</option>
+				    <option value="seoul" selected>서울</option>
+				    <option value="busan">부산</option>
+				    <option value="incheon">인천</option>
+				</select>
+				<button type="button" onClick="test();">날씨</button>
 			</span>
 		</c:if>
 	</div>
-	
+
 	<%-- 게시판 글 목록 --%>
 		<table border="1" width="50%" height="15" cellspacing="0">
-            <thead> 	
+            <thead>
                 <tr align="center" bgcolor="white">
                     <th>제목</th>
                     <th>작성자</th>
@@ -58,11 +64,11 @@
 	function logout() {
 		window.location.href = "/logout.do";
 	}
-	
+
 	function posting() {
 		window.location.href = "/posting.do";
 	}
-	
+
 	function test() {
 		window.location.href = "/test.do";
 	}

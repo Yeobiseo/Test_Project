@@ -28,7 +28,7 @@ public class MainDAO {
 	public List<HashMap<String, String>> post(SqlSessionTemplate session, HashMap<String, String> map) {
 		return session.selectList("main.post", map);
 	}
-	
+
 	public int postDel(SqlSessionTemplate session, HashMap<String, String> map) {
 		return session.update("main.postDel", map);
 	}
@@ -43,5 +43,9 @@ public class MainDAO {
 
 	public int replyInsert(SqlSessionTemplate session, TReply tr) {
 		return session.insert("main.replyInsert", tr);
+	}
+
+	public String idCheck(SqlSessionTemplate session, String id) {
+		return session.selectOne("main.idCheck", id);
 	}
 }

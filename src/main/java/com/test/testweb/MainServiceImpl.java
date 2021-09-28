@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 
 @Service(value = "mainService")
 public class MainServiceImpl implements MainService {
-	
+
 	@Autowired
 	SqlSessionTemplate session;
-	
+
 	@Resource(name = "mainDAO")
 	MainDAO dao;
 
@@ -43,7 +43,7 @@ public class MainServiceImpl implements MainService {
 	public List<HashMap<String, String>> post(HashMap<String, String> map) {
 		return dao.post(session, map);
 	}
-	
+
 	@Override
 	public int postDel(HashMap<String, String> map) {
 		return dao.postDel(session, map);
@@ -62,6 +62,11 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public int replyInsert(TReply tr) {
 		return dao.replyInsert(session, tr);
+	}
+
+	@Override
+	public String idCheck(String id) {
+		return dao.idCheck(session, id);
 	}
 
 

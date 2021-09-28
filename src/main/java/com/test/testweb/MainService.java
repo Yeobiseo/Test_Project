@@ -23,4 +23,6 @@ public interface MainService {
 
 	int replyInsert(TReply tr);
 
+	String idCheck(String string);
+
 }

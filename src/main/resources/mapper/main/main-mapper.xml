@@ -7,14 +7,14 @@
 	INSERT INTO TUSER
 	VALUES     (#{userId},
 	            #{userPwd},
-	            SYSDATE) 
+	            SYSDATE)
 </insert>
 
 <select id="login" resultType="HashMap">
 	SELECT A.USER_ID as USER_ID,
 	       A.INSERT_DATE as INSERT_DATE
-	  FROM TUSER A 
-	 WHERE A.USER_ID=#{id}  
+	  FROM TUSER A
+	 WHERE A.USER_ID=#{id}
 	   AND A.USER_PWD=#{pwd}
 </select>
 
@@ -25,16 +25,16 @@
 	            #{content},
 	            '1',
 	            #{userId},
-	            SYSDATE) 
+	            SYSDATE)
 </insert>
- 
+
 <select id="postList" resultType="HashMap">
 	SELECT A.NO as NO,
 		   A.TITLE as TITLE,
 		   A.CONTENT as CONTEST,
 		   A.USE_YN as USER_YN,
 		   A.USER_ID as USER_ID,
-		   TO_CHAR(A.INSERT_DATE, 'yy/mm/dd hh24:mi') as INSERT_DATE 
+		   TO_CHAR(A.INSERT_DATE, 'yy/mm/dd hh24:mi') as INSERT_DATE
 	  FROM TBOARD A
 	 WHERE A.USE_YN='1'
 </select>
@@ -66,7 +66,7 @@
 		   A.RECONTENT as RECONTENT,
 		   A.USER_ID as USER_ID,
 		   A.RE_YN as RE_YN,
-		   TO_CHAR(A.INSERT_DATE, 'yy/mm/dd hh24:mi') as INSERT_DATE 
+		   TO_CHAR(A.INSERT_DATE, 'yy/mm/dd hh24:mi') as INSERT_DATE
 	  FROM TREPLY A
 	 WHERE A.NO=#{no}
 </select>
@@ -78,6 +78,14 @@
 	            USER_ID)
 	VALUES     (#{no},
 	            #{recontent},
-	            #{userId}) 
+	            #{userId})
 </insert>
+
+
+<select id="idCheck" parameterType="String" resultType="String">
+	SELECT COUNT(1) AS ID_CHECK
+	  FROM TUSER A
+	 WHERE A.USER_ID = #{id}
+</select>
+
 </mapper>

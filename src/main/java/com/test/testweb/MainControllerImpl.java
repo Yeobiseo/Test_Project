@@ -17,9 +17,11 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -31,7 +33,7 @@ public class MainControllerImpl implements MainController {
 	@Resource(name = "mainService")
 	MainService ms;
 
-	//게시판 글 목록	
+	//게시판 글 목록
 	@Override
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView postList(HttpServletRequest request, HttpServletResponse response) {
@@ -40,8 +42,8 @@ public class MainControllerImpl implements MainController {
 		mav.addObject("list",postList);
 		return mav;
 	}
-	
-	
+
+
 	// 로그인
 	@Override
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
@@ -81,11 +83,11 @@ public class MainControllerImpl implements MainController {
 	@RequestMapping(value = "/signupMv.do", method = RequestMethod.POST)
 	public ModelAndView signupMv(@RequestParam HashMap<String, String> map) {
 		ModelAndView mav = new ModelAndView("msg");
-		
+
 		TUser tu = new TUser();
 		tu.setUserId(map.get("id"));
 		tu.setUserPwd(map.get("pwd"));
-		
+
 		try {
 			int rtn = ms.signupMv(tu);
 
@@ -115,12 +117,12 @@ public class MainControllerImpl implements MainController {
 	@RequestMapping(value = "/postingMv.do", method = RequestMethod.POST)
 	public ModelAndView postingMv(@RequestParam HashMap<String, String> map, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		
+
 		TBoard tb = new TBoard();
 		tb.setTitle(map.get("title"));
 		tb.setContent(map.get("content"));
 		tb.setUserId(session.getAttribute("userId").toString());
-		
+
 		mav.setViewName("msg");
 		try {
 			int rtn = ms.postingMv(tb);
@@ -136,32 +138,32 @@ public class MainControllerImpl implements MainController {
 			return mav;
 			}
 		}
-	
-	
+
+
 	// 작성글 상세보기
 	@Override
 	@RequestMapping(value = "/post.do", method = RequestMethod.GET)
-	public ModelAndView post(HttpServletRequest request, HttpServletResponse response, 
+	public ModelAndView post(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam HashMap<String, String> map) {
 		List<HashMap<String, String>> post = ms.post(map);
 		List<HashMap<String, String>> reply = ms.reply(map);
-		
+
 		ModelAndView mav = new ModelAndView("post");
 		mav.addObject("list",post);
 		mav.addObject("reply",reply);
 		return mav;
 	}
-	
+
 	// 작성글 삭제
 	@Override
 	@RequestMapping(value = "/postDel.do", method = RequestMethod.GET)
-	public ModelAndView postDel(HttpServletRequest request, HttpServletResponse response, 
+	public ModelAndView postDel(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam HashMap<String, String> map) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("msg");
 		try {
 			int rtn = ms.postDel(map);
-			
+
 			if (rtn > 0) {
 				mav.addObject("msg", "삭제 됐누");
 				return mav;
@@ -174,29 +176,29 @@ public class MainControllerImpl implements MainController {
 			return mav;
 			}
 		}
-	
+
 	// 작성글 수정 페이지 이동
 	@Override
 	@RequestMapping(value = "/postUpage.do", method = RequestMethod.POST)
-	public ModelAndView postUpage(HttpServletRequest request, HttpServletResponse response, 
+	public ModelAndView postUpage(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam HashMap<String, String> map) {
 		List<HashMap<String, String>> post = ms.post(map);
 		ModelAndView mav = new ModelAndView("postUpage");
 		mav.addObject("list",post);
 		return mav;
 	}
-	
+
 	// 작성글 수정 데이터 저장
 	@Override
 	@RequestMapping(value = "/postUpdate.do", method = RequestMethod.POST)
-	public ModelAndView postUpdate(HttpServletRequest request, HttpServletResponse response, 
+	public ModelAndView postUpdate(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam HashMap<String, String> map) {
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("msg");
 		try {
 			int rtn = ms.postUpdate(map);
-			
+
 			if (rtn > 0) {
 				mav.addObject("msg", "수정 됐누");
 				return mav;
@@ -209,20 +211,20 @@ public class MainControllerImpl implements MainController {
 			return mav;
 		}
 	}
-	
+
 	// 댓글 데이터 저장
 	@Override
 	@RequestMapping(value = "/replyInsert.do", method = RequestMethod.POST)
 	public ModelAndView replyInsert(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam HashMap<String, String> map, HttpSession session) {
-				
+
 		ModelAndView mav = new ModelAndView();
-		
+
 		TReply tr = new TReply();
 		tr.setNo(map.get("no"));
 		tr.setRecontent(map.get("recontent"));
 		tr.setUserId(session.getAttribute("userId").toString());
-		
+
 		mav.setViewName("msgreplay");
 		try {
 			int rtn = ms.replyInsert(tr);
@@ -239,7 +241,7 @@ public class MainControllerImpl implements MainController {
 			return mav;
 		}
 	}
-	
+
 	// 날씨 여행지 정보 가져오기 테스트
 	@SuppressWarnings("all")
 	@RequestMapping(value = "/test.do", method = RequestMethod.GET)
@@ -250,39 +252,48 @@ public class MainControllerImpl implements MainController {
 			URL url = new URL(urlStr);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			int responseCode = conn.getResponseCode();
-			
+
 			// conn에 담긴 값들을 버퍼에 담음
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-			
+
 			String xml = IOUtils.toString(br);
 
 			JSONObject jp = XML.toJSONObject(xml);
-			
+
 			String str = jp.toString();
-			
+
 			System.out.println(str.toString());
-			
+
 			ObjectMapper objectMapper = new ObjectMapper();
 			Map<String, Object> map = new HashMap<String, Object>();
 			map = objectMapper.readValue(str, new TypeReference<Map<String, Object>>() {
-			});	
-			
+			});
+
 			Map<String, Object> dataResponse = (Map<String, Object>) map.get("response");
 			Map<String, Object> body = (Map<String, Object>) dataResponse.get("body");
-			
+
 			Map<String, Object> items = null;
 			List<Map<String, Object>> itemList = null;
 
 			items = (Map<String, Object>) body.get("items");
 			itemList = (List<Map<String, Object>>) items.get("item");
-			
+
 			request.setAttribute("list", itemList);
-			
+
 		} catch(Exception e) {
 			System.out.println("에러났누");
 		}
-		
+
 		return "test";
-	
+
 	}
+
+
+	@ResponseBody
+	@RequestMapping(value = "/idcheck.do", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public String idCheck(HttpServletRequest request, @RequestBody HashMap<String, String> map) {
+		String rtn = ms.idCheck(map.get("val"));
+		return rtn;
+	}
+
 }
