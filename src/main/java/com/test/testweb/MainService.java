@@ -25,4 +25,10 @@ public interface MainService {
 
 	String idCheck(String string);
 
+	int reDel(HashMap<String, String> map);
+
+	List<HashMap<String, String>> mypage(HashMap<String, String> map);
+
+	List<HashMap<String, String>> myInfo(HashMap<String, String> map);
+
 }

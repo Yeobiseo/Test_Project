@@ -48,4 +48,16 @@ public class MainDAO {
 	public String idCheck(SqlSessionTemplate session, String id) {
 		return session.selectOne("main.idCheck", id);
 	}
+
+	public int reDel(SqlSessionTemplate session, HashMap<String, String> map) {
+		return session.update("main.reDel", map);
+	}
+
+	public List<HashMap<String, String>> mypage(SqlSessionTemplate session, HashMap<String, String> map) {
+		return session.selectList("main.mypage", map);
+	}
+
+	public List<HashMap<String, String>> myInfo(SqlSessionTemplate session, HashMap<String, String> map) {
+		return session.selectList("main.myInfo", map);
+	}
 }

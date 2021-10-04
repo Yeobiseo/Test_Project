@@ -66,19 +66,25 @@
 		   A.RECONTENT as RECONTENT,
 		   A.USER_ID as USER_ID,
 		   A.RE_YN as RE_YN,
-		   TO_CHAR(A.INSERT_DATE, 'yy/mm/dd hh24:mi') as INSERT_DATE
+		   TO_CHAR(A.INSERT_DATE, 'yy/mm/dd hh24:mi') as INSERT_DATE,
+		   A.RE_NO as RE_NO
 	  FROM TREPLY A
 	 WHERE A.NO=#{no}
+	   AND A.RE_YN='1'
 </select>
 
 <insert id="replyInsert" parameterType="TReply">
 	INSERT INTO TREPLY
 	           (NO,
 	            RECONTENT,
-	            USER_ID)
+	            USER_ID,
+	            RE_NO
+	            )
 	VALUES     (#{no},
 	            #{recontent},
-	            #{userId})
+	            #{userId},
+	            TREPLY_RE_NO_SEQ.nextval
+	            )
 </insert>
 
 
@@ -88,4 +94,25 @@
 	 WHERE A.USER_ID = #{id}
 </select>
 
+<update id="reDel" parameterType="HashMap">
+	UPDATE TREPLY A
+	   SET A.RE_YN = '0'
+	 WHERE A.RE_NO = #{no}
+</update>
+
+<select id="mypage" resultType="Hashmap">
+    SELECT A.TITLE as TITLE,
+		   A.NO as NO,
+     	   TO_CHAR(A.INSERT_DATE, 'yy/mm/dd hh24:mi') as INSERT_DATE
+      FROM TBOARD A 
+     WHERE A.user_id = #{id} 
+       AND A.USE_YN='1'
+</select>
+
+<select id="myInfo" resultType="Hashmap">
+	SELECT A.USER_ID,
+           TO_CHAR(A.INSERT_DATE, 'yyyy/mm/dd') as INSERT_DATE
+      FROM TUSER A
+     WHERE A.USER_ID = #{id}
+</select>
 </mapper>

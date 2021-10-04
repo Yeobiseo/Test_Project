@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <script>
 alert('${msg}');
-<% request.setAttribute("aa", "test"); %>
-window.location.href = "/";
+if('${url}'.length > 0){
+	 window.location.href = "/post.do?no=" + '${url}';
+} else window.location.href = "/";
 </script>

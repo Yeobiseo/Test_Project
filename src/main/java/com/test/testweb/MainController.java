@@ -31,8 +31,12 @@ public interface MainController {
 
 	ModelAndView postUpdate(HttpServletRequest request, HttpServletResponse response, HashMap<String, String> map);
 
-	ModelAndView replyInsert(HttpServletRequest request, HttpServletResponse response, HashMap<String, String> map,  HttpSession session);
+	ModelAndView replyInsert(HttpServletRequest request, HttpServletResponse response, HashMap<String, String> map, HttpSession session);
 
 	ModelAndView postList(HttpServletRequest request, HttpServletResponse response, HashMap<String, String> map);
+
+	ModelAndView reDel(HttpServletRequest request, HttpServletResponse response, HashMap<String, String> map);
+
+	ModelAndView mypage(HttpServletRequest request, HttpServletResponse response, HashMap<String, String> map);
 
 }

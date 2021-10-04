@@ -236,6 +236,8 @@ public class MainControllerImpl implements MainController {
 			@RequestParam HashMap<String, String> map, HttpSession session) {
 
 		ModelAndView mav = new ModelAndView();
+		
+		
 
 		TReply tr = new TReply();
 		tr.setNo(map.get("no"));
@@ -308,6 +310,52 @@ public class MainControllerImpl implements MainController {
 	public String idCheck(HttpServletRequest request, @RequestBody HashMap<String, String> map) {
 		String rtn = ms.idCheck(map.get("val"));
 		return rtn;
+	}
+	
+	//댓글 삭제
+	@Override
+	@RequestMapping(value = "/reDel.do", method = RequestMethod.GET)
+	public ModelAndView reDel(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam HashMap<String, String> map) {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("msg");
+		try {
+			int rtn = ms.reDel(map);
+
+			if (rtn > 0) {
+				mav.addObject("msg", "삭제 됐누");
+				mav.addObject("url", map.get("post"));
+				return mav;
+			} else {
+				mav.addObject("msg", "삭제 실패했누");
+				return mav;
+			}
+		} catch (Exception e) {
+			mav.addObject("msg", "에러!");
+			return mav;
+		}
+	}
+	
+	
+	//마이페이지 목록
+	@Override
+	@RequestMapping(value = "/mypage.do", method = RequestMethod.GET)
+	public ModelAndView mypage(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam HashMap<String, String> map) {
+		// map -> id=kmk
+		
+		// 글목록 가져오기
+		List<HashMap<String, String>> mypage = ms.mypage(map);
+		
+		// 가입정보 가져오기
+		List<HashMap<String, String>> myInfo = ms.myInfo(map);
+		
+		// 페이지 셋팅
+		ModelAndView mav = new ModelAndView("mypage");
+		mav.addObject("list", mypage);
+		mav.addObject("info", myInfo);
+		return mav;
 	}
 
 }

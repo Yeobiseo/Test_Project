@@ -69,5 +69,20 @@ public class MainServiceImpl implements MainService {
 		return dao.idCheck(session, id);
 	}
 
+	@Override
+	public int reDel(HashMap<String, String> map) {
+		return dao.reDel(session, map);
+	}
+
+	@Override
+	public List<HashMap<String, String>> mypage(HashMap<String, String> map) {
+		return dao.mypage(session, map);
+	}
+
+	@Override
+	public List<HashMap<String, String>> myInfo(HashMap<String, String> map) {
+		return dao.myInfo(session, map);
+	}
+
 
 }

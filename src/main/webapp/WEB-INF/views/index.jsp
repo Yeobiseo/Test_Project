@@ -10,8 +10,8 @@
 <body>
 	<form action="/login.do" method="post">
 		<c:if test="${userList eq null}">
-			<input type="text" name="id" required="required" value="${requestScope.inputId}">
-			<input type="password" name="pwd" required="required">
+			<input type="text" name="id" required="required" value="${requestScope.inputId}" placeholder="아이디">
+			<input type="password" name="pwd" required="required" placeholder="비밀번호">
 			<button type="submit">로그인</button>
 			<button type="button" onClick="signUp();">회원가입</button>
 			<button type="button" onClick="test();">날씨</button>
@@ -21,7 +21,7 @@
 	<%-- 로그인 상태표시 --%>
 	<div style="margin-bottom:15px;">
 		<c:if test="${userList ne null}">
-					${userList[0].USER_ID} 님 안녕하세요!
+					<a href="/mypage.do?id=${userList[0].USER_ID}">${userList[0].USER_ID}</a> 님 안녕하세요!
 			<span>
 				<button type="button" onClick="logout()">로그아웃</button>
 				<button type="submit" onClick="posting()">글쓰기</button>
