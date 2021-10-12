@@ -30,14 +30,12 @@
 	float: left;
 	box-sizing: border-box;
 	border-right: 1px solid black;
-	<%--background: #8977ad;--%>
 	 }
 	 
 	block.right {
 	width: 40%;
 	float: right;
 	box-sizing: border-box;
-	<%--background: #ece6cc;--%>
 	}
 	
 	.navigation {
@@ -51,6 +49,48 @@
     height : 720px;
     margin-top: 12px;
 	}
+	
+	<%--회원가입 btn--%>
+	#wrap {
+	text-align:center;
+	width:300px;
+	}
+	
+	.title {
+	line-height:1;
+	color:red;
+	position:absolute;
+	left:76%;
+	transform:translateX(-50%);
+	top:300px;
+	transition:0.5s all
+	}
+	
+	.title h3 {
+	font-size:30px;
+	margin:0
+	}
+	
+	.more {
+	display:block;
+	font-size:18x;
+	color:#fff;
+	background:red;
+	line-height:40px;
+	width:120px;
+	margin-top:30px;
+	margin-left:43px;
+	opacity:0;
+	transition:0.5s all
+	}
+	
+	#wrap:hover .more {
+	opacity:1
+	}
+	
+	#wrap:hover .title {
+	top:300px
+	}
 </style>
 <body>
 	<form action="/login.do" method="post">
@@ -62,19 +102,17 @@
 			<button type="button" onClick="test();">날씨</button>
 		</c:if>
 	</form>
-
 	<%-- 로그인 상태표시 --%>
-	<div class="linetop">
 		<c:if test="${userList ne null}">
-					<a href="/mypage.do?id=${userList[0].USER_ID}">${userList[0].USER_ID}</a> 님 안녕하세요!
+			<a href="/mypage.do?id=${userList[0].USER_ID}">${userList[0].USER_ID}</a> 님 안녕하세요!
 			<span>
 				<button type="button" onClick="logout()">로그아웃</button>
 				<button type="submit" onClick="posting()">글쓰기</button>
 				<button type="button" onClick="test();">날씨</button>
 			</span>
 		</c:if>
-	</div>
 	<%-- 게시판 글 목록 --%>
+	<div class="linetop"></div>
 	<block>
 	<block class="left">
 			<div style="margin-top: 10px;" align="center">	
@@ -98,38 +136,51 @@
 		        </table>
        		 </div>
      	</block>
-     <block class="right">
-	     <button id="createBtn" onclick="createFunc();">캐릭터생성</button>
-	     <div id="createBox" style="display: none;">캐릭터생성
-		     <hr>
-		     <input type="text" placeholder="캐릭터명">
-		     <button>중복체크</button>
-		     <br>
-		     성별
-		     <br>
-		     <input type="radio" name="gender" value="male" checked>
-		     <label for="male">남</label>
-		     <input type="radio" name="gender" value="female">
-		     <label for="female">여</label>
-		     <br><br>
-		     성격(3개 까지 가능)<br><br>
-		     <%-- 온순함(연인과 만날 확률 증가), 냉철함(연인을 만날 확률 감소) --%>
-			 <input type='radio' name='type1' value='1'/>온순함
-			 <input type='radio' name='type1' value='2'/>냉철함
-			 <br>
-			 <%-- 재력(돈을 얻을 확률 증가), 정력(자녀를 만들 확률 증가) --%>
-			 <input type='radio' name='type2' value='3'/>재력
-			 <input type='radio' name='type2' value='4'/>정력
-			 <br>
-			 <%-- 근력(배고픔 감소), 지능(공부 경험치 확률 증가) --%>
-			 <input type='radio' name='type3' value='5'/>근력
-			 <input type='radio' name='type3' value='6'/>지능
-			 <br><br>
-			 <button>생성</button>
-		     <button onclick="cancelFunc();">취소</button>
-		 </div>	
-     </block>
-   </block>
+	<block class="right">
+	<c:if test="${userList eq null}">
+		<div id="wrap">
+		  <img src="resources/img/123.gif">
+		  <div class="title">
+		    <h3>↓↓↓↓↓↓↓</h3>
+		    <a href="/signUp.do" class="more">회원가입</a>
+		  </div>
+		</div>
+	</c:if>
+	<c:if test="${userList ne null}">
+		<div align="center">
+			<br id="createBr">
+	    	<button id="createBtn" onclick="createFunc();">캐릭터생성</button>
+	    <div id="createBox" style="display: none;"><h3>캐릭터생성</h3>
+			<hr>
+		    <input type="text" placeholder="캐릭터명">
+		    <button>중복체크</button>
+		    <br>
+		    <div style="font-weight:600;">성별</div>
+		    <input type="radio" name="gender" value="male" checked>
+		    <label for="male">남</label>
+		    <input type="radio" name="gender" value="female">
+		    <label for="female">여</label>
+		    <br><br>
+		    <div style="font-weight:600;">성격(3개 까지 가능)</div>
+		    <%-- 온순함(연인과 만날 확률 증가), 냉철함(연인을 만날 확률 감소) --%>
+			<input type='radio' name='type1' value='1'/>온순함
+			<input type='radio' name='type1' value='2'/>냉철함
+			<br>
+			<%-- 재력(돈을 얻을 확률 증가), 정력(자녀를 만들 확률 증가) --%>
+			<input type='radio' name='type2' value='3'/>재력
+			<input type='radio' name='type2' value='4'/>정력
+			<br>
+			<%-- 근력(배고픔 감소), 지능(공부 경험치 확률 증가) --%>
+			<input type='radio' name='type3' value='5'/>근력
+			<input type='radio' name='type3' value='6'/>지능
+			<br><br>
+			<button>생성</button>
+		    <button onclick="cancelFunc();">취소</button>
+		</div>
+		</div>
+		</c:if>	
+	</block>
+</block>
 </body>
 <script type="text/javascript">
 	function signUp() {
@@ -150,10 +201,12 @@
 	
 	<%--캐릭터 생성 버튼--%>
 	function createFunc() {
+		document.getElementById("createBr").style.display = "none";
 		document.getElementById("createBtn").style.display = "none";
 		document.getElementById("createBox").style.display = "block";
 	}
 	function cancelFunc() {
+		document.getElementById("createBr").style.display = "block";
 		document.getElementById("createBox").style.display = "none";
 		document.getElementById("createBtn").style.display = "block";
 	}
