@@ -10,7 +10,7 @@
 <style>
 	.lineright {
 	border-right: 1px solid black;
-	width: 50%;
+	width: 100%;
 	height: 650px;
 	 }
 	 
@@ -20,23 +20,36 @@
 	width: 100%;
 	 }
 	 
-	b{
+	block{
 	width: 100%;
 	height: 500px;
 	 }
 
-	b.left {
-	width: 40%;
+	block.left {
+	width: 60%;
 	float: left;
 	box-sizing: border-box;
-	background: #8977ad;
+	border-right: 1px solid black;
+	<%--background: #8977ad;--%>
 	 }
 	 
-	b.right {
-	width: 60%;
+	block.right {
+	width: 40%;
 	float: right;
 	box-sizing: border-box;
-	background: #ece6cc;
+	<%--background: #ece6cc;--%>
+	}
+	
+	.navigation {
+    width : 100%;
+    height : 40px;
+    border-bottom : 1px solid black;
+    margin-top : 24px;
+	}
+	.mainpage {
+    width : 100%;
+    height : 720px;
+    margin-top: 12px;
 	}
 </style>
 <body>
@@ -62,11 +75,10 @@
 		</c:if>
 	</div>
 	<%-- 게시판 글 목록 --%>
-	<b>
-	<b class="left">
-		 <%-- <div class="lineright"> --%>
-			<div style="margin-top: 10px;">	
-				<table border="1" width="100%" height="15" cellspacing="0">
+	<block>
+	<block class="left">
+			<div style="margin-top: 10px;" align="center">	
+				<table border="1" width="90%" height="15" cellspacing="0">
 		            <thead>
 		                <tr align="center" bgcolor="white">
 		                    <th>제목</th>
@@ -84,13 +96,40 @@
 					</c:forEach>
 		            </tbody>
 		        </table>
-	        </div>
-        <%--</div>--%>
-     </b>
-     <b class="right">
-     오른쪽
-     </b>
-     </b>
+       		 </div>
+     	</block>
+     <block class="right">
+	     <button id="createBtn" onclick="createFunc();">캐릭터생성</button>
+	     <div id="createBox" style="display: none;">캐릭터생성
+		     <hr>
+		     <input type="text" placeholder="캐릭터명">
+		     <button>중복체크</button>
+		     <br>
+		     성별
+		     <br>
+		     <input type="radio" name="gender" value="male" checked>
+		     <label for="male">남</label>
+		     <input type="radio" name="gender" value="female">
+		     <label for="female">여</label>
+		     <br><br>
+		     성격(3개 까지 가능)<br><br>
+		     <%-- 온순함(연인과 만날 확률 증가), 냉철함(연인을 만날 확률 감소) --%>
+			 <input type='radio' name='type1' value='1'/>온순함
+			 <input type='radio' name='type1' value='2'/>냉철함
+			 <br>
+			 <%-- 재력(돈을 얻을 확률 증가), 정력(자녀를 만들 확률 증가) --%>
+			 <input type='radio' name='type2' value='3'/>재력
+			 <input type='radio' name='type2' value='4'/>정력
+			 <br>
+			 <%-- 근력(배고픔 감소), 지능(공부 경험치 확률 증가) --%>
+			 <input type='radio' name='type3' value='5'/>근력
+			 <input type='radio' name='type3' value='6'/>지능
+			 <br><br>
+			 <button>생성</button>
+		     <button onclick="cancelFunc();">취소</button>
+		 </div>	
+     </block>
+   </block>
 </body>
 <script type="text/javascript">
 	function signUp() {
@@ -107,6 +146,16 @@
 
 	function test() {
 		window.location.href = "/test.do";
+	}
+	
+	<%--캐릭터 생성 버튼--%>
+	function createFunc() {
+		document.getElementById("createBtn").style.display = "none";
+		document.getElementById("createBox").style.display = "block";
+	}
+	function cancelFunc() {
+		document.getElementById("createBox").style.display = "none";
+		document.getElementById("createBtn").style.display = "block";
 	}
 </script>
 </html>
