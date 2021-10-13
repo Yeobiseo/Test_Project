@@ -152,8 +152,8 @@
 	    	<button id="createBtn" onclick="createFunc();">캐릭터생성</button>
 	    <div id="createBox" style="display: none;"><h3>캐릭터생성</h3>
 			<hr>
-		    <input type="text" placeholder="캐릭터명">
-		    <button>중복체크</button>
+		    <input type="text" name="id" id="idValue" placeholder="캐릭터명">
+		    <button type="button" onclick="idCheckFunc();">중복체크</button>
 		    <br>
 		    <div style="font-weight:600;">성별</div>
 		    <input type="radio" name="gender" value="male" checked>
@@ -210,5 +210,37 @@
 		document.getElementById("createBox").style.display = "none";
 		document.getElementById("createBtn").style.display = "block";
 	}
+	
+	<%--중복 체크--%>
+	function idCheckFunc() {
+		var id = document.getElementById('idValue').value;
+
+		if(id.length == 0){
+			alert('아이디를 입력하세요');
+		} else {
+			var xhr = new XMLHttpRequest();
+
+				xhr.open('POST', '/idcheck.do');
+				xhr.setRequestHeader('Content-Type', 'application/json');
+
+				var data = {val: id};
+				xhr.send(JSON.stringify(data));
+
+				xhr.onreadystatechange = function() {
+					if(xhr.readyState == xhr.DONE){
+						if(xhr.status == 200 || xhr.status == 201){
+							if(xhr.response == '1'){
+								alert('이미 사용중인 아이디입니다.');
+								flag = false;
+							} else {
+								alert('사용가능한 아이디입니다.');
+								flag = true;
+							}
+						}
+					}
+				}
+		}
+	}
+
 </script>
 </html>
