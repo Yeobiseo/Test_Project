@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="character">
+
+<insert id="characterCreate" parameterType="TCharacter">
+	INSERT INTO TCHARACTER
+	  (USER_ID,
+	   CHAR_NO,
+	   CHAR_NAME,
+	   CHAR_AGE,
+	   CHAR_PER1,
+	   CHAR_PER2,
+	   CHAR_PER3,
+	   CHAR_GENDER,
+	   DEATH_YN,
+	   INSERT_DATE)
+	VALUES
+	  (#{userId},
+	   TCHARACTER_NO_SEQ.NEXTVAL,
+	   #{charName},
+	   1,
+	   LPAD(#{charPer1}, 3 , '0'),
+	   LPAD(#{charPer2}, 3 , '0'),
+	   LPAD(#{charPer3}, 3 , '0'),
+	   #{charGender},
+	   '0',
+	   SYSDATE
+	  )
+</insert>
+
+</mapper>

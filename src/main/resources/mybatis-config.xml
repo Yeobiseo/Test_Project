@@ -6,6 +6,7 @@
   <typeAlias alias="TBoard" type="com.test.testweb.TBoard"/>
   <typeAlias alias="TUser" type="com.test.testweb.TUser"/>
   <typeAlias alias="TReply" type="com.test.testweb.TReply"/>
+  <typeAlias alias="TCharacter" type="com.test.testweb.TCharacter"/>
 </typeAliases>
 
 </configuration>

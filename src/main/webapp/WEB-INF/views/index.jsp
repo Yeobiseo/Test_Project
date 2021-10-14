@@ -13,13 +13,13 @@
 	width: 100%;
 	height: 650px;
 	 }
-	 
+
 	.linetop {
 	border-bottom: 1px solid black;
 	margin-top: 10px;
 	width: 100%;
 	 }
-	 
+
 	block{
 	width: 100%;
 	height: 500px;
@@ -31,13 +31,13 @@
 	box-sizing: border-box;
 	border-right: 1px solid black;
 	 }
-	 
+
 	block.right {
 	width: 40%;
 	float: right;
 	box-sizing: border-box;
 	}
-	
+
 	.navigation {
     width : 100%;
     height : 40px;
@@ -49,13 +49,13 @@
     height : 720px;
     margin-top: 12px;
 	}
-	
+
 	<%--회원가입 btn--%>
 	#wrap {
 	text-align:center;
 	width:300px;
 	}
-	
+
 	.title {
 	line-height:1;
 	color:red;
@@ -65,12 +65,12 @@
 	top:300px;
 	transition:0.5s all
 	}
-	
+
 	.title h3 {
 	font-size:30px;
 	margin:0
 	}
-	
+
 	.more {
 	display:block;
 	font-size:18x;
@@ -83,11 +83,11 @@
 	opacity:0;
 	transition:0.5s all
 	}
-	
+
 	#wrap:hover .more {
 	opacity:1
 	}
-	
+
 	#wrap:hover .title {
 	top:300px
 	}
@@ -115,7 +115,7 @@
 	<div class="linetop"></div>
 	<block>
 	<block class="left">
-			<div style="margin-top: 10px;" align="center">	
+			<div style="margin-top: 10px;" align="center">
 				<table border="1" width="90%" height="15" cellspacing="0">
 		            <thead>
 		                <tr align="center" bgcolor="white">
@@ -150,35 +150,37 @@
 		<div align="center">
 			<br id="createBr">
 	    	<button id="createBtn" onclick="createFunc();">캐릭터생성</button>
-	    <div id="createBox" style="display: none;"><h3>캐릭터생성</h3>
+	  		<div id="createBox" style="display: none;"><h3>캐릭터생성</h3>
 			<hr>
-		    <input type="text" name="id" id="idValue" placeholder="캐릭터명">
-		    <button type="button" onclick="idCheckFunc();">중복체크</button>
-		    <br>
-		    <div style="font-weight:600;">성별</div>
-		    <input type="radio" name="gender" value="male" checked>
-		    <label for="male">남</label>
-		    <input type="radio" name="gender" value="female">
-		    <label for="female">여</label>
-		    <br><br>
-		    <div style="font-weight:600;">성격(3개 까지 가능)</div>
-		    <%-- 온순함(연인과 만날 확률 증가), 냉철함(연인을 만날 확률 감소) --%>
-			<input type='radio' name='type1' value='1'/>온순함
-			<input type='radio' name='type1' value='2'/>냉철함
-			<br>
-			<%-- 재력(돈을 얻을 확률 증가), 정력(자녀를 만들 확률 증가) --%>
-			<input type='radio' name='type2' value='3'/>재력
-			<input type='radio' name='type2' value='4'/>정력
-			<br>
-			<%-- 근력(배고픔 감소), 지능(공부 경험치 확률 증가) --%>
-			<input type='radio' name='type3' value='5'/>근력
-			<input type='radio' name='type3' value='6'/>지능
-			<br><br>
-			<button>생성</button>
-		    <button onclick="cancelFunc();">취소</button>
+			<form action="/characterCreate.do" method="POST">
+			    <input type="text" name="id" id="idValue" placeholder="캐릭터명">
+			    <button type="button" onclick="idCheckFunc();">중복체크</button>
+			    <br>
+			    <div style="font-weight:600;">성별</div>
+			    <input type="radio" name="gender" value="male" checked>
+			    <label for="male">남</label>
+			    <input type="radio" name="gender" value="female">
+			    <label for="female">여</label>
+			    <br><br>
+			    <div style="font-weight:600;">성격(3개 까지 가능)</div>
+			    <%-- 온순함(연인과 만날 확률 증가), 냉철함(연인을 만날 확률 감소) --%>
+				<input type='radio' name='type1' value='1'/>온순함
+				<input type='radio' name='type1' value='2'/>냉철함
+				<br>
+				<%-- 재력(돈을 얻을 확률 증가), 정력(자녀를 만들 확률 증가) --%>
+				<input type='radio' name='type2' value='3'/>재력
+				<input type='radio' name='type2' value='4'/>정력
+				<br>
+				<%-- 근력(배고픔 감소), 지능(공부 경험치 확률 증가) --%>
+				<input type='radio' name='type3' value='5'/>근력
+				<input type='radio' name='type3' value='6'/>지능
+				<br><br>
+				<button type="submit">생성</button>
+			    <button onclick="cancelFunc();">취소</button>
+		    </form>
+			</div>
 		</div>
-		</div>
-		</c:if>	
+		</c:if>
 	</block>
 </block>
 </body>
@@ -198,7 +200,7 @@
 	function test() {
 		window.location.href = "/test.do";
 	}
-	
+
 	<%--캐릭터 생성 버튼--%>
 	function createFunc() {
 		document.getElementById("createBr").style.display = "none";
@@ -210,7 +212,7 @@
 		document.getElementById("createBox").style.display = "none";
 		document.getElementById("createBtn").style.display = "block";
 	}
-	
+
 	<%--중복 체크--%>
 	function idCheckFunc() {
 		var id = document.getElementById('idValue').value;
