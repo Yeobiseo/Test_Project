@@ -54,7 +54,8 @@ public class MainControllerImpl implements MainController {
 		// 캐릭터 목록 (로그인이 됐을 경우)
 		if (session.getAttribute("userList") != null) {
 			List<HashMap<String, String>> charList = cs.charList(session.getAttribute("userId").toString());
-			mav.addObject("charList", charList);
+//			mav.addObject("charList", charList);
+			session.setAttribute("charList", charList);
 
 		// 캐릭터 생성가능 여부
 		List<HashMap<String, String>> charYn = cs.charYn(session.getAttribute("userId").toString());
@@ -373,6 +374,14 @@ public class MainControllerImpl implements MainController {
 		return mav;
 	}
 
-
+	//유저 메인페이지 이동
+	@Override
+	@RequestMapping(value = "/usermain.do", method = RequestMethod.GET)
+	public ModelAndView usermain(@RequestParam HashMap<String, String> map) {
+		List<HashMap<String, String>> usermain = ms.usermain(map);
+		ModelAndView mav = new ModelAndView("usermain");
+		mav.addObject("charList", usermain);
+		return mav;
+	}
 
 }

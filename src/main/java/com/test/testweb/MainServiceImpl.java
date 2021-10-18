@@ -84,5 +84,10 @@ public class MainServiceImpl implements MainService {
 		return dao.myInfo(session, map);
 	}
 
+	@Override
+	public List<HashMap<String, String>> usermain(HashMap<String, String> map) {
+		return dao.usermain(session, map);
+	}
+
 
 }

@@ -104,8 +104,8 @@
     SELECT A.TITLE as TITLE,
 		   A.NO as NO,
      	   TO_CHAR(A.INSERT_DATE, 'yy/mm/dd hh24:mi') as INSERT_DATE
-      FROM TBOARD A 
-     WHERE A.user_id = #{id} 
+      FROM TBOARD A
+     WHERE A.user_id = #{id}
        AND A.USE_YN='1'
 </select>
 
@@ -115,4 +115,21 @@
       FROM TUSER A
      WHERE A.USER_ID = #{id}
 </select>
+
+<select id="usermain" resultType="Hashmap">
+	SELECT A.USER_ID,
+			   A.CHAR_NO,
+		       A.CHAR_NAME,
+		       A.CHAR_AGE,
+		       A.CHAR_PER1,
+		       A.CHAR_PER2,
+		       A.CHAR_PER3,
+		       (case when A.CHAR_GENDER ='M' then '♂' else '♀' end) as CHAR_GENDER,
+		       A.DEATH_YN,
+		       A.LOVE_NO,
+		       A.INSERT_DATE,
+		       A.CHAR_IMG
+	   FROM TCHARACTER A
+	 WHERE A.CHAR_NO = #{no}
+ </select>
 </mapper>

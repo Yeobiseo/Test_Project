@@ -39,4 +39,6 @@ public interface MainController {
 
 	ModelAndView mypage(HttpServletRequest request, HttpServletResponse response, HashMap<String, String> map);
 
+	ModelAndView usermain(HashMap<String, String> map);
+
 }

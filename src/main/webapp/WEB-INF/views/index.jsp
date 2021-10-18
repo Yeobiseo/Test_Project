@@ -145,7 +145,7 @@
 				<%-- 캐릭터 정보 --%>
 				<div align="left" id="charListBox">
 					<c:forEach var="item" items="${charList}" begin="0">
-						<a href="" style="text-decoration:none; font-size: 18px;">
+						<a href="/usermain.do?no=${item.CHAR_NO}" style="text-decoration:none; font-size: 18px;">
 						<img src="/resources/${item.CHAR_IMG}" width="100px" height="100px" style="float: left; margin-right: 10px; margin-left: 30px;">
 							<br>
 						    	<div style="margin-top: 15px; margin-bottom: 50px;">${item.CHAR_NAME}</a> (${item.CHAR_GENDER})</div>
