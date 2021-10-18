@@ -33,7 +33,7 @@ public interface MainController {
 
 	ModelAndView replyInsert(HttpServletRequest request, HttpServletResponse response, HashMap<String, String> map, HttpSession session);
 
-	ModelAndView postList(HttpServletRequest request, HttpServletResponse response, HashMap<String, String> map);
+	ModelAndView postList(HttpServletRequest request, HttpServletResponse response, HashMap<String, String> map, HttpSession session);
 
 	ModelAndView reDel(HttpServletRequest request, HttpServletResponse response, HashMap<String, String> map);
 

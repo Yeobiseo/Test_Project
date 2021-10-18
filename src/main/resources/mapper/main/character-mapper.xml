@@ -17,7 +17,7 @@
 	   INSERT_DATE)
 	VALUES
 	  (#{userId},
-	   TCHARACTER_NO_SEQ.NEXTVAL,
+	   LPAD(TCHARACTER_NO_SEQ.NEXTVAL, 10 , '0'),
 	   #{charName},
 	   1,
 	   LPAD(#{charPer1}, 3 , '0'),
@@ -29,4 +29,34 @@
 	  )
 </insert>
 
+<select id="charList" resultType="HashMap">
+	SELECT A.USER_ID,
+	       A.CHAR_NO,
+	       A.CHAR_NAME,
+	       A.CHAR_AGE,
+	       (SELECT B.CODE_DESC
+	          FROM TCODE B
+	         WHERE B.CODE_LGROUP = 'A01'
+	           AND B.CODE_MGROUP = A.CHAR_PER1) AS PER1,
+	       (SELECT B.CODE_DESC
+	          FROM TCODE B
+	         WHERE B.CODE_LGROUP = 'A01'
+	           AND B.CODE_MGROUP = A.CHAR_PER2) AS PER2,
+	       (SELECT B.CODE_DESC
+	          FROM TCODE B
+	         WHERE B.CODE_LGROUP = 'A01'
+	           AND B.CODE_MGROUP = A.CHAR_PER3) AS PER3,
+	       (case when A.CHAR_GENDER ='M' then '♂' else '♀' end) as char_gender,
+	       A.DEATH_YN,
+	       (case when A.LOVE_NO is null then '없음' else A.LOVE_NO END) as love_NO,
+	       A.CHAR_IMG,
+	       A.INSERT_DATE
+	  FROM TCHARACTER A
+	  WHERE A.USER_ID = #{userId}
+</select>
+<select id="charYn" resultType="HashMap">
+	SELECT (CASE WHEN COUNT(1) >= 2 THEN 'X' ELSE 'O' END) AS CHAR_YN
+	   FROM TCHARACTER A
+	 WHERE A.USER_ID = #{userId}
+</select>
 </mapper>

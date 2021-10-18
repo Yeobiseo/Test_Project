@@ -33,18 +33,33 @@ public class MainControllerImpl implements MainController {
 	@Resource(name = "mainService")
 	MainService ms;
 
+	@Resource(name = "characterService")
+	CharacterService cs;
+
 	// 아이디 저장용 변수
 	private String page = "";
 	private String inputId = "";
 
-	// 게시판 글 목록
+	// 메인 페이지
 	@Override
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView postList(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam HashMap<String, String> map) {
+			@RequestParam HashMap<String, String> map, HttpSession session) {
+
+		// 게시글 목록
 		List<HashMap<String, String>> postList = ms.postList();
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("list", postList);
+
+		// 캐릭터 목록 (로그인이 됐을 경우)
+		if (session.getAttribute("userList") != null) {
+			List<HashMap<String, String>> charList = cs.charList(session.getAttribute("userId").toString());
+			mav.addObject("charList", charList);
+
+		// 캐릭터 생성가능 여부
+		List<HashMap<String, String>> charYn = cs.charYn(session.getAttribute("userId").toString());
+		mav.addObject("charYn", charYn);
+		}
 
 		if (page.equals("login")) {
 			mav.addObject("inputId", inputId);
@@ -236,8 +251,8 @@ public class MainControllerImpl implements MainController {
 			@RequestParam HashMap<String, String> map, HttpSession session) {
 
 		ModelAndView mav = new ModelAndView();
-		
-		
+
+
 
 		TReply tr = new TReply();
 		tr.setNo(map.get("no"));
@@ -311,13 +326,13 @@ public class MainControllerImpl implements MainController {
 		String rtn = ms.idCheck(map.get("val"));
 		return rtn;
 	}
-	
+
 	//댓글 삭제
 	@Override
 	@RequestMapping(value = "/reDel.do", method = RequestMethod.GET)
 	public ModelAndView reDel(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam HashMap<String, String> map) {
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("msg");
 		try {
@@ -336,26 +351,28 @@ public class MainControllerImpl implements MainController {
 			return mav;
 		}
 	}
-	
-	
+
+
 	//마이페이지 목록
 	@Override
 	@RequestMapping(value = "/mypage.do", method = RequestMethod.GET)
 	public ModelAndView mypage(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam HashMap<String, String> map) {
 		// map -> id=kmk
-		
+
 		// 글목록 가져오기
 		List<HashMap<String, String>> mypage = ms.mypage(map);
-		
+
 		// 가입정보 가져오기
 		List<HashMap<String, String>> myInfo = ms.myInfo(map);
-		
+
 		// 페이지 셋팅
 		ModelAndView mav = new ModelAndView("mypage");
 		mav.addObject("list", mypage);
 		mav.addObject("info", myInfo);
 		return mav;
 	}
-	
+
+
+
 }

@@ -51,45 +51,17 @@
 	}
 
 	<%--회원가입 btn--%>
-	#wrap {
-	text-align:center;
-	width:300px;
+	.signbtn{
+	position: absolute;
+	padding: 40px 130px 40px 130px;
+	margin-left: 100px;
+	top:360px;
+	background-color: rgba(0,0,0,0);
+	border: none;
 	}
 
-	.title {
-	line-height:1;
-	color:red;
-	position:absolute;
-	left:76%;
-	transform:translateX(-50%);
-	top:300px;
-	transition:0.5s all
-	}
-
-	.title h3 {
-	font-size:30px;
-	margin:0
-	}
-
-	.more {
-	display:block;
-	font-size:18x;
-	color:#fff;
-	background:red;
-	line-height:40px;
-	width:120px;
-	margin-top:30px;
-	margin-left:43px;
-	opacity:0;
-	transition:0.5s all
-	}
-
-	#wrap:hover .more {
-	opacity:1
-	}
-
-	#wrap:hover .title {
-	top:300px
+	.signbtn:hover {
+	cursor: pointer;
 	}
 </style>
 <body>
@@ -138,22 +110,21 @@
      	</block>
 	<block class="right">
 	<c:if test="${userList eq null}">
-		<div id="wrap">
-		  <img src="resources/img/123.gif">
-		  <div class="title">
-		    <h3>↓↓↓↓↓↓↓</h3>
-		    <a href="/signUp.do" class="more">회원가입</a>
+		  <div style="position: relative;">
+		  	<img src="resources/img/123.gif">
 		  </div>
-		</div>
+		  	<button onclick="signUp();" class="signbtn"></button>
 	</c:if>
 	<c:if test="${userList ne null}">
 		<div align="center">
 			<br id="createBr">
-	    	<button id="createBtn" onclick="createFunc();">캐릭터생성</button>
-	  		<div id="createBox" style="display: none;"><h3>캐릭터생성</h3>
+			<c:if test="${charYn[0].CHAR_YN ne 'X'}">
+	    	<button id="createBtn" onclick="createFunc();">캐릭터생성</button><br>
+	    	</c:if>
+	  		<div id="createBox" style="display: none;"><h3>캐릭터생성</h3><h5>※ 캐릭터는 최대 2명까지 생성 가능</h5>
 			<hr>
 			<form action="/characterCreate.do" method="POST">
-			    <input type="text" name="id" id="idValue" placeholder="캐릭터명">
+			    <input type="text" name="id" id="idValue" placeholder="캐릭터명" required="required">
 			    <button type="button" onclick="idCheckFunc();">중복체크</button>
 			    <br>
 			    <div style="font-weight:600;">성별</div>
@@ -164,22 +135,33 @@
 			    <br><br>
 			    <div style="font-weight:600;">성격(3개 까지 가능)</div>
 			    <%-- 온순함(연인과 만날 확률 증가), 냉철함(연인을 만날 확률 감소) --%>
-				<input type='radio' name='type1' value='1'/>온순함
+				<input type='radio' name='type1' value='1' required="required"/>온순함
 				<input type='radio' name='type1' value='2'/>냉철함
 				<br>
 				<%-- 재력(돈을 얻을 확률 증가), 정력(자녀를 만들 확률 증가) --%>
-				<input type='radio' name='type2' value='3'/>재력
+				<input type='radio' name='type2' value='3' required="required"/>재력
 				<input type='radio' name='type2' value='4'/>정력
 				<br>
 				<%-- 근력(배고픔 감소), 지능(공부 경험치 확률 증가) --%>
-				<input type='radio' name='type3' value='5'/>근력
+				<input type='radio' name='type3' value='5' required="required"/>근력
 				<input type='radio' name='type3' value='6'/>지능
 				<br><br>
 				<button type="submit">생성</button>
-			    <button onclick="cancelFunc();">취소</button>
+			    <button type="button" onclick="cancelFunc();">취소</button>
 		    </form>
 			</div>
-		</div>
+
+			<%-- 캐릭터 정보 --%>
+			<div align="left" id="charListBox">
+				<c:forEach var="item" items="${charList}" begin="0">
+					<a href="" style="text-decoration:none; font-size: 18px;">
+					<img src="/resources/${item.CHAR_IMG}" width="100px" height="100px" style="float: left; margin-right: 10px; margin-left: 30px;">
+						<br>
+					    	<div style="margin-top: 15px; margin-bottom: 50px;">${item.CHAR_NAME}</a> (${item.CHAR_GENDER})</div>
+					    <br>
+				</c:forEach>
+				</div>
+			</div>
 		</c:if>
 	</block>
 </block>
@@ -205,11 +187,14 @@
 	function createFunc() {
 		document.getElementById("createBr").style.display = "none";
 		document.getElementById("createBtn").style.display = "none";
+		document.getElementById("charListBox").style.display = "none";
 		document.getElementById("createBox").style.display = "block";
 	}
+	<%-- 캐릭터 취소 버튼 --%>
 	function cancelFunc() {
 		document.getElementById("createBr").style.display = "block";
 		document.getElementById("createBox").style.display = "none";
+		document.getElementById("charListBox").style.display = "block";
 		document.getElementById("createBtn").style.display = "block";
 	}
 
