@@ -12,7 +12,7 @@
 	.alink:link { color: black; text-decoration: none;}
 	.alink:visited { color: black; text-decoration: none;}
 	.alink:hover { color: black; text-decoration: none;}
-	.postBox:hover { cursor: pointer; }
+	.postBox:hover { cursor: pointer; font-weight: 600;}
 	.lineright {
 	border-right: 1px solid black;
 	width: 100%;
@@ -70,24 +70,7 @@
 	}
 </style>
 <body>
-	<form action="/login.do" method="post">
-		<c:if test="${userList eq null}">
-			<input type="text" name="id" required="required" value="${requestScope.inputId}" placeholder="아이디">
-			<input type="password" name="pwd" required="required" placeholder="비밀번호">
-			<button type="submit">로그인</button>
-			<button type="button" onClick="signUp();">회원가입</button>
-			<button type="button" onClick="test();">날씨</button>
-		</c:if>
-	</form>
-	<%-- 로그인 상태표시 --%>
-		<c:if test="${userList ne null}">
-			<a href="/mypage.do?id=${userList[0].USER_ID}">${userList[0].USER_ID}</a> 님 안녕하세요!
-			<span>
-				<button type="button" onClick="logout()">로그아웃</button>
-				<button type="submit" onClick="posting()">글쓰기</button>
-				<button type="button" onClick="test();">날씨</button>
-			</span>
-		</c:if>
+<jsp:include page="/resources/common/navigation.jsp"></jsp:include> 
 	<%-- 게시판 글 목록 --%>
 	<div class="linetop"></div>
 	<block>
