@@ -29,7 +29,6 @@
 				<input type="password" name="pwd" required="required" placeholder="비밀번호">
 				<button type="submit">로그인</button>
 				<button type="button" onClick="signUp();">회원가입</button>
-				<button type="button" onClick="test();" hidden="true">날씨</button>
 			</c:if>
 		</form>
 		<c:if test="${userList ne null}">
@@ -37,11 +36,11 @@
 			<span>
 				<button type="button" onClick="logout()">로그아웃</button>
 				<button type="submit" onClick="posting()">글쓰기</button>
-				<button type="button" onClick="test();">날씨</button>
 			</span>
 		</c:if>
 		<%-- 로그인 상태표시 --%>
-	    <a href="/" style="font-size: 35px; font-weight: 600;">두둥탁 피플!</a>
+		<br>
+	    <a href="/" style="font-size: 25px; font-weight: 600;">피플게임 닷컴</a>
 	    </div>
     </div>
     <div class="mx-auto order-0">

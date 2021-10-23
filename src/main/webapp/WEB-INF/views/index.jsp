@@ -72,10 +72,10 @@
 <body>
 <jsp:include page="/resources/common/navigation.jsp"></jsp:include> 
 	<%-- 게시판 글 목록 --%>
-	<div class="linetop"></div>
+	<div class="linetop" style="margin-top: 83px;"></div>
 	<block>
 		<block class="left">
-			<h3 style="margin-left: 35px;">공지사항</h3>
+			<h4 style="margin-left: 35px;">공지사항</h4>
 			<div style="border-bottom: 3px solid gray; margin-left:37px; width: 70%"></div>
 	 		<ul style="list-style: none; width: 70%;">
 	 			<c:forEach var="item" items="${list}" begin="0">
@@ -150,10 +150,6 @@
 
 	function posting() {
 		window.location.href = "/posting.do";
-	}
-
-	function test() {
-		window.location.href = "/test.do";
 	}
 
 	<%--캐릭터 생성 버튼--%>
