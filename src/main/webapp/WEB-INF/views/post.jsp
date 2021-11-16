@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>귀여운 게시판</title>
+<title>공지사항</title>
 </head>
 <body>
 	<form action="postUpage.do" method="post">

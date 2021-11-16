@@ -36,10 +36,10 @@
 			<span>
 				<button type="button" onClick="logout()">로그아웃</button>
 				<button type="submit" onClick="posting()">글쓰기</button>
+				<br>
 			</span>
 		</c:if>
 		<%-- 로그인 상태표시 --%>
-		<br>
 	    <a href="/" style="font-size: 25px; font-weight: 600;">피플게임 닷컴</a>
 	    </div>
     </div>
@@ -54,13 +54,13 @@
                 <a class="nav-link" href="#">공지사항</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">자유게시판</a>
+                <a class="nav-link" href="/board.do">자유게시판</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">이용방법</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Q&A</a>
+                <a class="nav-link" href="/QnA.do">Q&A</a>
             </li>
         </ul>
     </div>

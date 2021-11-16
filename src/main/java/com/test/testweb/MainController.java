@@ -12,10 +12,10 @@ public interface MainController {
 
 	public String signUp();
 
-	public String posting();
-
 	public ModelAndView postUpage(HttpServletRequest request, HttpServletResponse response, HashMap<String, String> map);
 
+	String posting(HttpServletRequest request);
+	
 	ModelAndView signupMv(HashMap<String, String> map);
 
 	ModelAndView postingMv(HashMap<String, String> map, HttpSession session);
@@ -40,5 +40,10 @@ public interface MainController {
 	ModelAndView mypage(HttpServletRequest request, HttpServletResponse response, HashMap<String, String> map);
 
 	ModelAndView usermain(HashMap<String, String> map);
+
+	String QnA();
+
+	ModelAndView board();
+
 
 }

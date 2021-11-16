@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>귀여운 게시판</title>
+<title>피플게임 닷컴</title>
 <jsp:include page="/resources/common/bootstrap.jsp"></jsp:include>
 </head>
 <style>
@@ -68,6 +68,10 @@
 	.signbtn:hover {
 	cursor: pointer;
 	}
+	
+	body{
+	background-image: url('resources/img/BGI.jpeg');
+	}
 </style>
 <body>
 <jsp:include page="/resources/common/navigation.jsp"></jsp:include> 
@@ -75,13 +79,26 @@
 	<div class="linetop" style="margin-top: 83px;"></div>
 	<block>
 		<block class="left">
-			<h4 style="margin-left: 35px;">공지사항</h4>
-			<div style="border-bottom: 3px solid gray; margin-left:37px; width: 70%"></div>
-	 		<ul style="list-style: none; width: 70%;">
-	 			<c:forEach var="item" items="${list}" begin="0">
-	 		 	 	<li class="postBox" style="border-bottom: 1px solid gray; padding-bottom: 8px; padding-top: 5px;" onclick="postFunc(${item.NO});"><div>${item.TITLE}</div><div></div>${item.USER_ID} ｜ ${item.INSERT_DATE}</li>
-	 		 	 </c:forEach>
-	 		</ul>
+			<br>
+			<div style="background-color: #FFFDFF; margin-left: 37px; width: 830px;">
+				<h4>공지사항</h4>
+				<div style="border-bottom: 3px solid gray; width: 70%"></div>
+		 		<ul style="list-style: none; width: 70%; padding-left: 0px;">
+		 			<c:forEach var="item" items="${list}" begin="0">
+		 		 	 	<li class="postBox" style="border-bottom: 1px solid gray; padding-bottom: 8px; padding-top: 5px;" onclick="postFunc(${item.NO});"><div>${item.TITLE}</div><div></div>${item.USER_ID} ｜ ${item.INSERT_DATE}</li>
+		 		 	 </c:forEach>
+		 		</ul>
+	 		</div>
+			<br>
+			<div style="background-color: #FFFDFF; margin-left: 37px; width: 830px;">
+				<h4>자유게시판</h4>
+				<div style="border-bottom: 3px solid gray; width: 70%"></div>
+		 		<ul style="list-style: none; width: 70%; padding-left: 0px;">
+		 			<c:forEach var="item" items="${boardList}" begin="0">
+		 		 	 	<li class="postBox" style="border-bottom: 1px solid gray; padding-bottom: 8px; padding-top: 5px;" onclick="postFunc(${item.NO});"><div>${item.TITLE}</div><div></div>${item.USER_ID} ｜ ${item.INSERT_DATE}</li>
+		 		 	 </c:forEach>
+		 		</ul>
+	 		</div>
     	</block>
 		<block class="right">
 		<c:if test="${userList eq null}">

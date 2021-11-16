@@ -33,4 +33,6 @@ public interface MainService {
 
 	List<HashMap<String, String>> usermain(HashMap<String, String> map);
 
+	List<HashMap<String, String>> boardList();
+
 }

@@ -46,15 +46,18 @@ public class MainControllerImpl implements MainController {
 	public ModelAndView postList(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam HashMap<String, String> map, HttpSession session) {
 
-		// 게시글 목록
+		// 공지사항 목록
 		List<HashMap<String, String>> postList = ms.postList();
 		ModelAndView mav = new ModelAndView("index");
 		mav.addObject("list", postList);
+		
+		// 자유게시판 목록
+		List<HashMap<String, String>> boardList = ms.boardList();
+		mav.addObject("boardList", boardList);
 
 		// 캐릭터 목록 (로그인이 됐을 경우)
 		if (session.getAttribute("userList") != null) {
 			List<HashMap<String, String>> charList = cs.charList(session.getAttribute("userId").toString());
-//			mav.addObject("charList", charList);
 			session.setAttribute("charList", charList);
 
 		// 캐릭터 생성가능 여부
@@ -142,7 +145,13 @@ public class MainControllerImpl implements MainController {
 	// 글쓰기 페이지 이동
 	@Override
 	@RequestMapping(value = "/posting.do", method = RequestMethod.GET)
-	public String posting() {
+	public String posting(HttpServletRequest request) {
+		String url = request.getHeader("REFERER");
+
+        if(url.contains("mypage")) {
+            request.setAttribute("type", "001");
+        } else request.setAttribute("type", "002");
+        
 		return "posting";
 	}
 
@@ -157,6 +166,7 @@ public class MainControllerImpl implements MainController {
 		tb.setContent(map.get("content"));
 		tb.setUserId(session.getAttribute("userId").toString());
 
+		tb.setType(map.get("type"));
 		mav.setViewName("msg");
 		try {
 			int rtn = ms.postingMv(tb);
@@ -381,6 +391,25 @@ public class MainControllerImpl implements MainController {
 		List<HashMap<String, String>> usermain = ms.usermain(map);
 		ModelAndView mav = new ModelAndView("usermain");
 		mav.addObject("charList", usermain);
+		return mav;
+	}
+	
+	//QnA 페이지 이동
+	@Override
+	@RequestMapping(value = "/QnA.do", method = RequestMethod.GET)
+	public String QnA() {
+		return "QnA";
+	}
+	
+	//자유게시판 이동
+	@Override
+	@RequestMapping(value = "/board.do", method = RequestMethod.GET)
+	public ModelAndView board() {
+		
+		List<HashMap<String, String>> boardList = ms.boardList();
+		ModelAndView mav = new ModelAndView("board");
+		mav.addObject("list", boardList);
+
 		return mav;
 	}
 

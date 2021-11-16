@@ -64,4 +64,8 @@ public class MainDAO {
 	public List<HashMap<String, String>> usermain(SqlSessionTemplate session, HashMap<String, String> map) {
 		return session.selectList("main.usermain", map);
 	}
+
+	public List<HashMap<String, String>> boardList(SqlSessionTemplate session, Object object) {
+		return session.selectList("main.boardList", null);
+	}
 }

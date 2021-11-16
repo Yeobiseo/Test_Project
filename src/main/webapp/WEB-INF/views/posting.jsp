@@ -12,6 +12,7 @@
 		<br>
 		<textarea rows="30" cols="80" name="content"></textarea>
 		<br>
+		<input type="hidden" value="${type}" name="type">
 		<button type="submit">확인</button>
 		<button type="button" onClick="back()">뒤로가기</button>
 	</form>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>귀여운 MyPage</title>
+<title>MyPage</title>
 </head>
 <body>
 ${userList[0].USER_ID}님의 글 목록
@@ -27,11 +27,15 @@ ${userList[0].USER_ID}님의 글 목록
             </tbody>
         </table>
         <button style='margin-top:10px;' type='button' onClick='back();'>뒤로가기</button>
-        <button>회원탈퇴</button>
+        <button onClick="post();">공지사항 작성</button>
 </body>
 <script type="text/javascript">
 	function back(){
 		window.history.back();
+	}
+	
+	function post(){
+		window.location.href='/posting.do';
 	}
 </script>
 </html>

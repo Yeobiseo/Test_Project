@@ -25,7 +25,9 @@
 	            #{content},
 	            '1',
 	            #{userId},
-	            SYSDATE)
+	            SYSDATE,
+	            #{type}
+	            )
 </insert>
 
 <select id="postList" resultType="HashMap">
@@ -37,6 +39,7 @@
 		   TO_CHAR(A.INSERT_DATE, 'yy/mm/dd hh24:mi') as INSERT_DATE
 	  FROM TBOARD A
 	 WHERE A.USE_YN='1'
+	   AND A.TYPE = '001'
 </select>
 
 <select id="post" resultType="HashMap">
@@ -132,4 +135,17 @@
 	   FROM TCHARACTER A
 	 WHERE A.CHAR_NO = #{no}
  </select>
+ 
+ <select id="boardList" resultType="HashMap">
+	SELECT A.NO as NO,
+		   A.TITLE as TITLE,
+		   A.CONTENT as CONTEST,
+		   A.USE_YN as USER_YN,
+		   A.USER_ID as USER_ID,
+		   TO_CHAR(A.INSERT_DATE, 'yy/mm/dd hh24:mi') as INSERT_DATE
+	  FROM TBOARD A
+	 WHERE A.USE_YN='1'
+	   AND A.TYPE = '002'
+</select>
+
 </mapper>
